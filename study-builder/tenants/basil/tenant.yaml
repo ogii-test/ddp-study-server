@@ -99,3 +99,21 @@ clients:
       alg: RS256
       lifetime_in_seconds: 36000
     oidc_conformant: true
+  - name: basil-native-client
+    app_type: native
+    callbacks:
+      - 'org.countmein.Count-Me-In://##AUTH0_DOMAIN##/ios/org.countmein.Count-Me-In/callback'
+      - 'org.countmein.Count-Me-In://##AUTH0_DOMAIN##/android/org.countmein.Count-Me-In/callback'
+    grant_types:
+      - password
+      - refresh_token
+    oidc_conformant: true
+    jwt_configuration:
+      alg: RS256
+      lifetime_in_seconds: 36000
+    client_metadata:
+      study: basil
+    mobile:
+      ios:
+        team_id: F74F43HWM5
+        app_bundle_identifier: org.countmein.Count-Me-In
