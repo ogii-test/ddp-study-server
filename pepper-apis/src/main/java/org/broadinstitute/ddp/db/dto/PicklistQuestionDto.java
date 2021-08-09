@@ -12,7 +12,7 @@ import org.jdbi.v3.core.mapper.reflect.JdbiConstructor;
 /**
  * DTO class to represent picklist question that includes all base question data.
  */
-public final class PicklistQuestionDto extends QuestionDto implements Serializable {
+public final class PicklistQuestionDto extends QuestionDto {
 
     private PicklistSelectMode selectMode;
     private PicklistRenderMode renderMode;
