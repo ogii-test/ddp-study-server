@@ -1,13 +1,13 @@
 package org.broadinstitute.ddp.model.activity.types;
 
-public enum OptionCollationStyle {
+public enum CollationStyle {
     /**
-    * Use the server's default collation style
+    * Use the default collation style
     */
     DEFAULT,
 
     /**
-    * The relative elements is defined by their positioning in the study definition.
+    * The relative position of elements is defined the data source.
     * 
     * <p>For example, if a picklist question declares 3 options:
     *   [ "Option A", "Option C", "Option D" ]
@@ -17,7 +17,7 @@ public enum OptionCollationStyle {
     IMPLICIT,
 
     /**
-     * Elements are arranged using an ascending localized alphabetical sort.
+     * Elements are an ascending, natural sorted order.
      */
-    ALPHABETICAL
+    NATURAL
 }
