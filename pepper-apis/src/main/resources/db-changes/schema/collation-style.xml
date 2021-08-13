@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet>         
+        <createTable tableName="collation_style">
+            <column name="id" type="bigint" autoIncrement="true" startWith="1">
+                <constraints primaryKey="true" primaryKeyName="collation_style_pk"/>
+            </column>
+            <column name="code" type="varchar(45)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="collation_style_code_uk"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="bskinner" id="20210809-add-collation-style">
+        <insert tableName="collation_style">
+            <column name="code" value="DEFAULT"/>
+        </insert>
+        <insert tableName="collation_style">
+            <column name="code" value="IMPLICIT"/>
+        </insert>
+        <insert tableName="collation_style">
+            <column name="code" value="NATURAL"/>
+        </insert>
+    </changeSet>
+
+    <changeSet author="bskinner" id="20210809-add-option-collation-to-picklist">
+        <addColumn tableName="picklist_question">
+            <column name="option_collation_style" type="bigint">
+                <constraints nullable="true"
+                             references="collation_style(id)"
+                             foreignKeyName="picklist_question_option_collation_style_fk"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+</databaseChangeLog>
