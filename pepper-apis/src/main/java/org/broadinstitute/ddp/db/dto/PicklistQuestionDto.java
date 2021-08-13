@@ -2,7 +2,7 @@ package org.broadinstitute.ddp.db.dto;
 
 import java.util.Set;
 
-import org.broadinstitute.ddp.model.activity.types.CollationStyle;
+import org.broadinstitute.ddp.model.activity.types.CollationPolicy;
 import org.broadinstitute.ddp.model.activity.types.PicklistRenderMode;
 import org.broadinstitute.ddp.model.activity.types.PicklistSelectMode;
 import org.jdbi.v3.core.mapper.Nested;
@@ -16,19 +16,19 @@ public final class PicklistQuestionDto extends QuestionDto {
 
     private PicklistSelectMode selectMode;
     private PicklistRenderMode renderMode;
-    private CollationStyle optionCollationStyle;
+    private CollationPolicy optionCollationPolicy;
     private Long labelTemplateId;
 
     @JdbiConstructor
     public PicklistQuestionDto(@Nested QuestionDto questionDto,
                                @ColumnName("picklist_select_mode") PicklistSelectMode selectMode,
                                @ColumnName("picklist_render_mode") PicklistRenderMode renderMode,
-                               @ColumnName("option_collation") CollationStyle optionCollationStyle,
+                               @ColumnName("option_collation") CollationPolicy optionCollationPolicy,
                                @ColumnName("picklist_label_template_id") Long labelTemplateId) {
         super(questionDto);
         this.selectMode = selectMode;
         this.renderMode = renderMode;
-        this.optionCollationStyle = optionCollationStyle;
+        this.optionCollationPolicy = optionCollationPolicy;
         this.labelTemplateId = labelTemplateId;
     }
 
@@ -40,8 +40,8 @@ public final class PicklistQuestionDto extends QuestionDto {
         return renderMode;
     }
 
-    public CollationStyle getOptionCollationStyle() {
-        return optionCollationStyle;
+    public CollationPolicy getOptionCollationPolicy() {
+        return optionCollationPolicy;
     }
 
     public Long getLabelTemplateId() {

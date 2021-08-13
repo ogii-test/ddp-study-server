@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 import com.google.gson.annotations.SerializedName;
 import org.broadinstitute.ddp.model.activity.definition.template.Template;
 import org.broadinstitute.ddp.model.activity.definition.validation.RuleDef;
-import org.broadinstitute.ddp.model.activity.types.CollationStyle;
+import org.broadinstitute.ddp.model.activity.types.CollationPolicy;
 import org.broadinstitute.ddp.model.activity.types.PicklistRenderMode;
 import org.broadinstitute.ddp.model.activity.types.PicklistSelectMode;
 import org.broadinstitute.ddp.model.activity.types.QuestionType;
@@ -32,8 +32,8 @@ public final class PicklistQuestionDef extends QuestionDef {
      * Defines the ordering of the picklist options.
      */
     @NotNull
-    @SerializedName("collationStyle")
-    private CollationStyle optionCollationStyle = CollationStyle.DEFAULT;
+    @SerializedName("collationPolicy")
+    private CollationPolicy optionCollationPolicy = CollationPolicy.DEFAULT;
 
     @Valid
     @SerializedName("picklistLabelTemplate")
@@ -82,7 +82,7 @@ public final class PicklistQuestionDef extends QuestionDef {
                                Template additionalInfoHeaderTemplate, Template additionalInfoFooterTemplate,
                                List<RuleDef> validations, PicklistSelectMode selectMode, PicklistRenderMode renderMode,
                                Template picklistLabelTemplate, List<PicklistGroupDef> groups, List<PicklistOptionDef> options,
-                               CollationStyle optionCollationStyle, boolean hideNumber, boolean writeOnce) {
+                               CollationPolicy optionCollationPolicy, boolean hideNumber, boolean writeOnce) {
         super(QuestionType.PICKLIST,
                 stableId,
                 isRestricted,
@@ -94,7 +94,7 @@ public final class PicklistQuestionDef extends QuestionDef {
                 writeOnce);
         this.selectMode = MiscUtil.checkNonNull(selectMode, "selectMode");
         this.renderMode = MiscUtil.checkNonNull(renderMode, "renderMode");
-        this.optionCollationStyle = (optionCollationStyle == null) ? CollationStyle.DEFAULT : optionCollationStyle;
+        this.optionCollationPolicy = (optionCollationPolicy == null) ? CollationPolicy.DEFAULT : optionCollationPolicy;
 
         if (renderMode == PicklistRenderMode.DROPDOWN && picklistLabelTemplate == null) {
             throw new IllegalArgumentException("picklist label is required for dropdown render mode");
@@ -121,8 +121,8 @@ public final class PicklistQuestionDef extends QuestionDef {
         return renderMode;
     }
 
-    public CollationStyle getOptionCollationStyle() {
-        return optionCollationStyle;
+    public CollationPolicy getOptionCollationPolicy() {
+        return optionCollationPolicy;
     }
 
     public Template getPicklistLabelTemplate() {
@@ -150,7 +150,7 @@ public final class PicklistQuestionDef extends QuestionDef {
 
         private PicklistSelectMode selectMode;
         private PicklistRenderMode renderMode;
-        private CollationStyle optionCollationStyle;
+        private CollationPolicy optionCollationPolicy;
 
         private Template label = null;
         private List<PicklistGroupDef> groups = new ArrayList<>();
@@ -175,8 +175,8 @@ public final class PicklistQuestionDef extends QuestionDef {
             return this;
         }
 
-        public Builder setOptionCollationStyle(CollationStyle collationStyle) {
-            this.optionCollationStyle = collationStyle;
+        public Builder setOptionCollationPolicy(CollationPolicy collationPolicy) {
+            this.optionCollationPolicy = collationPolicy;
             return this;
         }
 
@@ -227,7 +227,7 @@ public final class PicklistQuestionDef extends QuestionDef {
                                                                     label,
                                                                     groups,
                                                                     options,
-                                                                    optionCollationStyle,
+                                                                    optionCollationPolicy,
                                                                     hideNumber,
                                                                     writeOnce);
             configure(question);

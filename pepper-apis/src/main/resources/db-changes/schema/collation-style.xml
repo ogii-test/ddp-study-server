@@ -4,34 +4,34 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
     <changeSet>         
-        <createTable tableName="collation_style">
+        <createTable tableName="collation_policy">
             <column name="id" type="bigint" autoIncrement="true" startWith="1">
-                <constraints primaryKey="true" primaryKeyName="collation_style_pk"/>
+                <constraints primaryKey="true" primaryKeyName="collation_policy_pk"/>
             </column>
             <column name="code" type="varchar(45)">
-                <constraints nullable="false" unique="true" uniqueConstraintName="collation_style_code_uk"/>
+                <constraints nullable="false" unique="true" uniqueConstraintName="collation_policy_code_uk"/>
             </column>
         </createTable>
     </changeSet>
 
     <changeSet author="bskinner" id="20210809-add-collation-style">
-        <insert tableName="collation_style">
+        <insert tableName="collation_policy">
             <column name="code" value="DEFAULT"/>
         </insert>
-        <insert tableName="collation_style">
+        <insert tableName="collation_policy">
             <column name="code" value="IMPLICIT"/>
         </insert>
-        <insert tableName="collation_style">
+        <insert tableName="collation_policy">
             <column name="code" value="NATURAL"/>
         </insert>
     </changeSet>
 
     <changeSet author="bskinner" id="20210809-add-option-collation-to-picklist">
         <addColumn tableName="picklist_question">
-            <column name="option_collation_style" type="bigint">
+            <column name="option_collation_policy" type="bigint">
                 <constraints nullable="true"
-                             references="collation_style(id)"
-                             foreignKeyName="picklist_question_option_collation_style_fk"/>
+                             references="collation_policy(id)"
+                             foreignKeyName="picklist_question_option_collation_policy_fk"/>
             </column>
         </addColumn>
     </changeSet>

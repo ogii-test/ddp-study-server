@@ -1699,7 +1699,7 @@ public interface QuestionDao extends SqlObject {
         var builder = PicklistQuestionDef
                 .builder(dto.getSelectMode(), dto.getRenderMode(), dto.getStableId(), prompt)
                 .setLabel(label)
-                .setOptionCollationStyle(dto.getOptionCollationStyle())
+                .setOptionCollationPolicy(dto.getOptionCollationPolicy())
                 .addGroups(groups)
                 .addOptions(ungroupedOptions);
         configureBaseQuestionDef(builder, dto, ruleDefs, templates);
