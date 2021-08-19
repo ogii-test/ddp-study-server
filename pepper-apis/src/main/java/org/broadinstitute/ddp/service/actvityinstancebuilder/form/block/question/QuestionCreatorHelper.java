@@ -3,6 +3,7 @@ package org.broadinstitute.ddp.service.actvityinstancebuilder.form.block.questio
 import static org.broadinstitute.ddp.util.QuestionUtil.isReadOnly;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import org.broadinstitute.ddp.model.activity.definition.question.AgreementQuestionDef;
@@ -25,6 +26,7 @@ import org.broadinstitute.ddp.model.activity.instance.question.PicklistGroup;
 import org.broadinstitute.ddp.model.activity.instance.question.PicklistOption;
 import org.broadinstitute.ddp.model.activity.instance.question.PicklistQuestion;
 import org.broadinstitute.ddp.model.activity.instance.question.TextQuestion;
+import org.broadinstitute.ddp.model.activity.types.CollationPolicy;
 import org.broadinstitute.ddp.service.actvityinstancebuilder.context.AIBuilderContext;
 import org.broadinstitute.ddp.util.CollectionMiscUtil;
 
@@ -221,6 +223,10 @@ public class QuestionCreatorHelper {
                                 .createPicklistOption(ctx, picklistOptionDef, questionDef.getGroups()));
 
         picklistOptions.addAll(groupPicklistOptions);
+
+        if (questionDef.getOptionCollationPolicy() == CollationPolicy.NATURAL) {
+            picklistOptions.sort(Comparator.comparing(PicklistOption::getOptionLabel));
+        }
 
         return new PicklistQuestion(
                 questionDef.getStableId(),
