@@ -224,8 +224,16 @@ public class QuestionCreatorHelper {
 
         picklistOptions.addAll(groupPicklistOptions);
 
-        if (questionDef.getOptionCollationPolicy() == CollationPolicy.NATURAL) {
-            picklistOptions.sort(Comparator.comparing(PicklistOption::getOptionLabel));
+        switch(questionDef.getOptionCollationPolicy()) {
+            case NATURAL:
+                picklistOptions.sort(Comparator.comparing(PicklistOption::getOptionLabel));
+                break;
+            case IMPLICIT:
+            case DEFAULT:
+                // Nothing to do.
+                // Not having a default case is intentional- if the enum changes
+                // this should throw a compile-time error.
+                break;
         }
 
         return new PicklistQuestion(
