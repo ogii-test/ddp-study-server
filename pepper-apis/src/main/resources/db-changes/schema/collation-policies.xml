@@ -4,7 +4,7 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
-    <changeSet author="bskinner" id="20210809-add-collation-policy">
+    <changeSet author="bskinner" id="20210809-add-collation-policies-table">
         <createTable tableName="collation_policies">
             <column name="collation_policy_id" type="bigint" autoIncrement="true" startWith="1">
                 <constraints primaryKey="true" primaryKeyName="collation_policy_pk"/>
@@ -15,7 +15,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet author="bskinner" id="20210809-add-collation-policy">
+    <changeSet author="bskinner" id="20210809-insert-collation-policies">
         <insert tableName="collation_policies">
             <column name="code" value="DEFAULT"/>
         </insert>
