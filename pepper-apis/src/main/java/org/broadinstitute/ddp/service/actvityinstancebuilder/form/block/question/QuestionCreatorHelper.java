@@ -2,10 +2,15 @@ package org.broadinstitute.ddp.service.actvityinstancebuilder.form.block.questio
 
 import static org.broadinstitute.ddp.util.QuestionUtil.isReadOnly;
 
+import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
 
+import org.broadinstitute.ddp.cache.LanguageStore;
 import org.broadinstitute.ddp.model.activity.definition.question.AgreementQuestionDef;
 import org.broadinstitute.ddp.model.activity.definition.question.BoolQuestionDef;
 import org.broadinstitute.ddp.model.activity.definition.question.CompositeQuestionDef;
@@ -29,8 +34,13 @@ import org.broadinstitute.ddp.model.activity.instance.question.TextQuestion;
 import org.broadinstitute.ddp.model.activity.types.CollationPolicy;
 import org.broadinstitute.ddp.service.actvityinstancebuilder.context.AIBuilderContext;
 import org.broadinstitute.ddp.util.CollectionMiscUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class QuestionCreatorHelper {
+    
+    private static final Logger LOG = LoggerFactory.getLogger(QuestionCreatorHelper.class);
+
 
     AgreementQuestion createAgreementQuestion(AIBuilderContext ctx, AgreementQuestionDef questionDef) {
         return new AgreementQuestion(
@@ -224,9 +234,14 @@ public class QuestionCreatorHelper {
 
         picklistOptions.addAll(groupPicklistOptions);
 
+        var languageTag = (ctx.getIsoLangCode() != null) ? ctx.getIsoLangCode() : LanguageStore.DEFAULT_LANG_CODE;
+        var locale = Locale.forLanguageTag(languageTag);
+        var optionCollator = Collator.getInstance(locale);
+        optionCollator.setStrength(Collator.PRIMARY);
+
         switch(questionDef.getOptionCollationPolicy()) {
             case NATURAL:
-                picklistOptions.sort(Comparator.comparing(PicklistOption::getOptionLabel));
+                picklistOptions.sort();
                 break;
             case IMPLICIT:
             case DEFAULT:
