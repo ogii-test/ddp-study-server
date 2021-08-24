@@ -230,10 +230,11 @@ public class QuestionCreatorHelper {
                 break;
             case IMPLICIT:
             case DEFAULT:
-                // Nothing to do.
-                // Not having a default case is intentional- if the enum changes
-                // this should throw a compile-time error.
                 break;
+            default:
+                LOG.warn("Unsupported collation policy {} for question {}, falling back to DEFAULT.",
+                    questionDef.getOptionCollationPolicy().toString(),
+                    questionDef.getStableId());
         }
 
         return new PicklistQuestion(
