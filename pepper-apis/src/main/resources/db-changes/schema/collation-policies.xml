@@ -3,9 +3,10 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
-    <changeSet>         
-        <createTable tableName="collation_policy">
-            <column name="id" type="bigint" autoIncrement="true" startWith="1">
+
+    <changeSet author="bskinner" id="20210809-add-collation-policy">
+        <createTable tableName="collation_policies">
+            <column name="collation_policy_id" type="bigint" autoIncrement="true" startWith="1">
                 <constraints primaryKey="true" primaryKeyName="collation_policy_pk"/>
             </column>
             <column name="code" type="varchar(45)">
@@ -14,23 +15,23 @@
         </createTable>
     </changeSet>
 
-    <changeSet author="bskinner" id="20210809-add-collation-style">
-        <insert tableName="collation_policy">
+    <changeSet author="bskinner" id="20210809-add-collation-policy">
+        <insert tableName="collation_policies">
             <column name="code" value="DEFAULT"/>
         </insert>
-        <insert tableName="collation_policy">
+        <insert tableName="collation_policies">
             <column name="code" value="IMPLICIT"/>
         </insert>
-        <insert tableName="collation_policy">
+        <insert tableName="collation_policies">
             <column name="code" value="NATURAL"/>
         </insert>
     </changeSet>
 
     <changeSet author="bskinner" id="20210809-add-option-collation-to-picklist">
         <addColumn tableName="picklist_question">
-            <column name="option_collation_policy" type="bigint">
+            <column name="collation_policy_id" type="bigint">
                 <constraints nullable="true"
-                             references="collation_policy(id)"
+                             references="collation_policies(collation_policy_id)"
                              foreignKeyName="picklist_question_option_collation_policy_fk"/>
             </column>
         </addColumn>
