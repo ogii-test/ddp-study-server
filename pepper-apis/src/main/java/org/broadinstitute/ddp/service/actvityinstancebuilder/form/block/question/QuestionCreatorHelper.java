@@ -4,13 +4,8 @@ import static org.broadinstitute.ddp.util.QuestionUtil.isReadOnly;
 
 import java.text.Collator;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
 
-import org.broadinstitute.ddp.cache.LanguageStore;
 import org.broadinstitute.ddp.model.activity.definition.question.AgreementQuestionDef;
 import org.broadinstitute.ddp.model.activity.definition.question.BoolQuestionDef;
 import org.broadinstitute.ddp.model.activity.definition.question.CompositeQuestionDef;
@@ -31,7 +26,6 @@ import org.broadinstitute.ddp.model.activity.instance.question.PicklistGroup;
 import org.broadinstitute.ddp.model.activity.instance.question.PicklistOption;
 import org.broadinstitute.ddp.model.activity.instance.question.PicklistQuestion;
 import org.broadinstitute.ddp.model.activity.instance.question.TextQuestion;
-import org.broadinstitute.ddp.model.activity.types.CollationPolicy;
 import org.broadinstitute.ddp.service.actvityinstancebuilder.context.AIBuilderContext;
 import org.broadinstitute.ddp.util.CollectionMiscUtil;
 import org.slf4j.Logger;
@@ -234,7 +228,7 @@ public class QuestionCreatorHelper {
 
         picklistOptions.addAll(groupPicklistOptions);
 
-        switch(questionDef.getOptionCollationPolicy()) {
+        switch (questionDef.getOptionCollationPolicy()) {
             case NATURAL:
                 var locale = ctx.getLocale();
                 var collator = Collator.getInstance(locale);
@@ -248,8 +242,8 @@ public class QuestionCreatorHelper {
                 break;
             default:
                 LOG.warn("Unsupported collation policy {} for question {}, falling back to DEFAULT.",
-                    questionDef.getOptionCollationPolicy().toString(),
-                    questionDef.getStableId());
+                        questionDef.getOptionCollationPolicy().toString(),
+                        questionDef.getStableId());
         }
 
         return new PicklistQuestion(
