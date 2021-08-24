@@ -31,7 +31,6 @@ public final class PicklistQuestionDef extends QuestionDef {
     /**
      * Defines the ordering of the picklist options.
      */
-    @NotNull
     @SerializedName("optionCollationPolicy")
     private CollationPolicy optionCollationPolicy = CollationPolicy.DEFAULT;
 
