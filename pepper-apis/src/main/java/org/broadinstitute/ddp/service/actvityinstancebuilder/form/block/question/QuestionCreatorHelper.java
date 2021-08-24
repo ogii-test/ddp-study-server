@@ -234,14 +234,14 @@ public class QuestionCreatorHelper {
 
         picklistOptions.addAll(groupPicklistOptions);
 
-        var languageTag = (ctx.getIsoLangCode() != null) ? ctx.getIsoLangCode() : LanguageStore.DEFAULT_LANG_CODE;
-        var locale = Locale.forLanguageTag(languageTag);
-        var optionCollator = Collator.getInstance(locale);
-        optionCollator.setStrength(Collator.PRIMARY);
-
         switch(questionDef.getOptionCollationPolicy()) {
             case NATURAL:
-                picklistOptions.sort();
+                var locale = ctx.getLocale();
+                var collator = Collator.getInstance(locale);
+                collator.setStrength(Collator.PRIMARY);
+                picklistOptions.sort((lhs, rhs) -> {
+                    return collator.compare(lhs.getOptionLabel(), rhs.getOptionLabel());
+                });
                 break;
             case IMPLICIT:
             case DEFAULT:
