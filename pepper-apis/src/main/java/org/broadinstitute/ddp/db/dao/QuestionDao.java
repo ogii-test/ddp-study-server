@@ -1142,7 +1142,8 @@ public interface QuestionDao extends SqlObject {
         }
 
         int numInserted = getJdbiPicklistQuestion().insert(
-                picklist.getQuestionId(), picklist.getSelectMode(), picklist.getRenderMode(), labelTemplateId);
+                picklist.getQuestionId(), picklist.getSelectMode(), picklist.getRenderMode(),
+                picklist.getOptionCollationPolicy().orElse(null), labelTemplateId);
         if (numInserted != 1) {
             throw new DaoException("Inserted " + numInserted + " for picklist question " + picklist.getStableId());
         }

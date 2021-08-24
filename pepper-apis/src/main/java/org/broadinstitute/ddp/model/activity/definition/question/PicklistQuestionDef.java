@@ -5,6 +5,7 @@ import static java.util.stream.Collectors.toList;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -32,7 +33,7 @@ public final class PicklistQuestionDef extends QuestionDef {
      * Defines the ordering of the picklist options.
      */
     @SerializedName("optionCollationPolicy")
-    private CollationPolicy optionCollationPolicy = CollationPolicy.DEFAULT;
+    private CollationPolicy optionCollationPolicy;
 
     @Valid
     @SerializedName("picklistLabelTemplate")
@@ -93,7 +94,7 @@ public final class PicklistQuestionDef extends QuestionDef {
                 writeOnce);
         this.selectMode = MiscUtil.checkNonNull(selectMode, "selectMode");
         this.renderMode = MiscUtil.checkNonNull(renderMode, "renderMode");
-        this.optionCollationPolicy = (optionCollationPolicy == null) ? CollationPolicy.DEFAULT : optionCollationPolicy;
+        this.optionCollationPolicy = optionCollationPolicy;
 
         if (renderMode == PicklistRenderMode.DROPDOWN && picklistLabelTemplate == null) {
             throw new IllegalArgumentException("picklist label is required for dropdown render mode");
@@ -120,8 +121,8 @@ public final class PicklistQuestionDef extends QuestionDef {
         return renderMode;
     }
 
-    public CollationPolicy getOptionCollationPolicy() {
-        return optionCollationPolicy;
+    public Optional<CollationPolicy> getOptionCollationPolicy() {
+        return Optional.ofNullable(optionCollationPolicy);
     }
 
     public Template getPicklistLabelTemplate() {
@@ -175,7 +176,8 @@ public final class PicklistQuestionDef extends QuestionDef {
         }
 
         public Builder setOptionCollationPolicy(CollationPolicy collationPolicy) {
-            this.optionCollationPolicy = collationPolicy;
+            // If a `null` is passed in, default to the `DEFAULT` policy
+            this.optionCollationPolicy = (collationPolicy != null) ? collationPolicy : CollationPolicy.DEFAULT;
             return this;
         }
 

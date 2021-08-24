@@ -26,6 +26,7 @@ import org.broadinstitute.ddp.model.activity.instance.question.PicklistGroup;
 import org.broadinstitute.ddp.model.activity.instance.question.PicklistOption;
 import org.broadinstitute.ddp.model.activity.instance.question.PicklistQuestion;
 import org.broadinstitute.ddp.model.activity.instance.question.TextQuestion;
+import org.broadinstitute.ddp.model.activity.types.CollationPolicy;
 import org.broadinstitute.ddp.service.actvityinstancebuilder.context.AIBuilderContext;
 import org.broadinstitute.ddp.util.CollectionMiscUtil;
 import org.slf4j.Logger;
@@ -228,7 +229,8 @@ public class QuestionCreatorHelper {
 
         picklistOptions.addAll(groupPicklistOptions);
 
-        switch (questionDef.getOptionCollationPolicy()) {
+        var collationPolicy = questionDef.getOptionCollationPolicy().orElse(CollationPolicy.DEFAULT);
+        switch (collationPolicy) {
             case NATURAL:
                 var locale = ctx.getLocale();
                 var collator = Collator.getInstance(locale);
@@ -242,7 +244,7 @@ public class QuestionCreatorHelper {
                 break;
             default:
                 LOG.warn("Unsupported collation policy {} for question {}, falling back to DEFAULT.",
-                        questionDef.getOptionCollationPolicy().toString(),
+                        collationPolicy.toString(),
                         questionDef.getStableId());
         }
 
