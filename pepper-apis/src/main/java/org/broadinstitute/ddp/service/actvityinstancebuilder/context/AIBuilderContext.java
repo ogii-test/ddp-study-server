@@ -3,6 +3,7 @@ package org.broadinstitute.ddp.service.actvityinstancebuilder.context;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.broadinstitute.ddp.cache.LanguageStore;
@@ -136,6 +137,17 @@ public class AIBuilderContext {
 
     public LanguageDto getLanguageDto() {
         return languageDto;
+    }
+
+    public Locale getLocale() {
+        String languageCode = LanguageStore.DEFAULT_LANG_CODE;
+
+        var languageDto = getLanguageDto();
+        if (languageDto != null) {
+            languageCode = languageDto.getIsoCode();
+        }
+        
+        return Locale.forLanguageTag(languageCode);
     }
 
     public FormActivityDef getFormActivityDef() {
