@@ -1,5 +1,6 @@
 package org.broadinstitute.ddp.db.dao;
 
+import org.broadinstitute.ddp.model.activity.types.CollationPolicy;
 import org.broadinstitute.ddp.model.activity.types.PicklistRenderMode;
 import org.broadinstitute.ddp.model.activity.types.PicklistSelectMode;
 import org.jdbi.v3.sqlobject.SqlObject;
@@ -14,6 +15,7 @@ public interface JdbiPicklistQuestion extends SqlObject {
     int insert(@Bind("questionId") long questionId,
                @Bind("selectModeId") long selectModeId,
                @Bind("renderModeId") long renderModeId,
+               @Bind("collationPolicyId") long optionCollationPolicyId,
                @Bind("picklistLabelTemplateId") Long picklistLabelTemplateId);
 
     @UseStringTemplateSqlLocator
@@ -21,6 +23,7 @@ public interface JdbiPicklistQuestion extends SqlObject {
     int insert(@Bind("questionId") long questionId,
                @Bind("selectMode") PicklistSelectMode selectMode,
                @Bind("renderMode") PicklistRenderMode renderMode,
+               @Bind("collationPolicy") CollationPolicy optionCollationPolicy,
                @Bind("picklistLabelTemplateId") Long picklistLabelTemplateId);
 
 }
