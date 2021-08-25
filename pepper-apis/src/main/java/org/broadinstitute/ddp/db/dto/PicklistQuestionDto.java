@@ -23,7 +23,7 @@ public final class PicklistQuestionDto extends QuestionDto {
     public PicklistQuestionDto(@Nested QuestionDto questionDto,
                                @ColumnName("picklist_select_mode") PicklistSelectMode selectMode,
                                @ColumnName("picklist_render_mode") PicklistRenderMode renderMode,
-                               @ColumnName("collation_policy_id") CollationPolicy optionCollationPolicy,
+                               @ColumnName("option_collation_policy") CollationPolicy optionCollationPolicy,
                                @ColumnName("picklist_label_template_id") Long labelTemplateId) {
         super(questionDto);
         this.selectMode = selectMode;
