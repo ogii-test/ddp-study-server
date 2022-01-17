@@ -36,6 +36,12 @@ public class MappingUtil {
         return props;
     }
 
+    public static Map<String, Object> newDecimalType() {
+        Map<String, Object> props = new HashMap<>();
+        props.put("type", "decimal");
+        return props;
+    }
+
     public static Map<String, Object> newDateType(String format, boolean acceptMalformed) {
         Map<String, Object> props = new LinkedHashMap<>();
         props.put("type", "date");

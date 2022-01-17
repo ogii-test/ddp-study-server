@@ -6,28 +6,9 @@ import java.time.ZoneOffset;
 import org.broadinstitute.ddp.content.I18nContentRenderer;
 import org.broadinstitute.ddp.db.ActivityDefStore;
 import org.broadinstitute.ddp.db.dao.ValidationDao;
-import org.broadinstitute.ddp.model.activity.definition.validation.AgeRangeRuleDef;
-import org.broadinstitute.ddp.model.activity.definition.validation.CompleteRuleDef;
-import org.broadinstitute.ddp.model.activity.definition.validation.DateFieldRequiredRuleDef;
-import org.broadinstitute.ddp.model.activity.definition.validation.DateRangeRuleDef;
-import org.broadinstitute.ddp.model.activity.definition.validation.IntRangeRuleDef;
-import org.broadinstitute.ddp.model.activity.definition.validation.LengthRuleDef;
-import org.broadinstitute.ddp.model.activity.definition.validation.NumOptionsSelectedRuleDef;
-import org.broadinstitute.ddp.model.activity.definition.validation.RegexRuleDef;
-import org.broadinstitute.ddp.model.activity.definition.validation.RequiredRuleDef;
-import org.broadinstitute.ddp.model.activity.definition.validation.RuleDef;
-import org.broadinstitute.ddp.model.activity.definition.validation.UniqueRuleDef;
-import org.broadinstitute.ddp.model.activity.instance.validation.AgeRangeRule;
-import org.broadinstitute.ddp.model.activity.instance.validation.CompleteRule;
-import org.broadinstitute.ddp.model.activity.instance.validation.DateFieldRequiredRule;
-import org.broadinstitute.ddp.model.activity.instance.validation.DateRangeRule;
-import org.broadinstitute.ddp.model.activity.instance.validation.IntRangeRule;
-import org.broadinstitute.ddp.model.activity.instance.validation.LengthRule;
-import org.broadinstitute.ddp.model.activity.instance.validation.NumOptionsSelectedRule;
-import org.broadinstitute.ddp.model.activity.instance.validation.RegexRule;
-import org.broadinstitute.ddp.model.activity.instance.validation.RequiredRule;
-import org.broadinstitute.ddp.model.activity.instance.validation.Rule;
-import org.broadinstitute.ddp.model.activity.instance.validation.UniqueRule;
+import org.broadinstitute.ddp.db.dto.validation.DecimalRangeRuleDto;
+import org.broadinstitute.ddp.model.activity.definition.validation.*;
+import org.broadinstitute.ddp.model.activity.instance.validation.*;
 import org.broadinstitute.ddp.model.activity.types.RuleType;
 import org.broadinstitute.ddp.service.actvityinstancebuilder.context.AIBuilderContext;
 import org.jdbi.v3.core.Handle;
@@ -53,6 +34,8 @@ public class ValidationRuleCreator {
                 return createAgeRangeRule(ctx, (AgeRangeRuleDef) ruleDef);
             case INT_RANGE:
                 return createIntRangeRule(ctx, (IntRangeRuleDef) ruleDef);
+            case DECIMAL_RANGE:
+                return createDecimalRangeRule(ctx, (DecimalRangeRuleDef) ruleDef);
             case DATE_RANGE:
                 return createDateRangeRule(ctx, (DateRangeRuleDef) ruleDef);
             case DAY_REQUIRED:      // fall through
@@ -120,6 +103,17 @@ public class ValidationRuleCreator {
 
     private IntRangeRule createIntRangeRule(AIBuilderContext ctx, IntRangeRuleDef ruleDef) {
         return IntRangeRule.of(
+                ruleDef.getRuleId(),
+                findRuleMessage(ctx, ruleDef),
+                getHintTitle(ctx, ruleDef),
+                ruleDef.getAllowSave(),
+                ruleDef.getMin(),
+                ruleDef.getMax()
+        );
+    }
+
+    private DecimalRangeRule createDecimalRangeRule(AIBuilderContext ctx, DecimalRangeRuleDef ruleDef) {
+        return DecimalRangeRule.of(
                 ruleDef.getRuleId(),
                 findRuleMessage(ctx, ruleDef),
                 getHintTitle(ctx, ruleDef),

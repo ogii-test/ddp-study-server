@@ -15,13 +15,7 @@ import java.util.stream.Collectors;
 import org.broadinstitute.ddp.content.I18nContentRenderer;
 import org.broadinstitute.ddp.db.DaoException;
 import org.broadinstitute.ddp.db.dto.QuestionDto;
-import org.broadinstitute.ddp.db.dto.validation.AgeRangeRuleDto;
-import org.broadinstitute.ddp.db.dto.validation.DateRangeRuleDto;
-import org.broadinstitute.ddp.db.dto.validation.IntRangeRuleDto;
-import org.broadinstitute.ddp.db.dto.validation.LengthRuleDto;
-import org.broadinstitute.ddp.db.dto.validation.NumOptionsSelectedRuleDto;
-import org.broadinstitute.ddp.db.dto.validation.RegexRuleDto;
-import org.broadinstitute.ddp.db.dto.validation.RuleDto;
+import org.broadinstitute.ddp.db.dto.validation.*;
 import org.broadinstitute.ddp.model.activity.definition.question.QuestionDef;
 import org.broadinstitute.ddp.model.activity.definition.template.Template;
 import org.broadinstitute.ddp.model.activity.definition.validation.AgeRangeRuleDef;
@@ -35,17 +29,7 @@ import org.broadinstitute.ddp.model.activity.definition.validation.RegexRuleDef;
 import org.broadinstitute.ddp.model.activity.definition.validation.RequiredRuleDef;
 import org.broadinstitute.ddp.model.activity.definition.validation.RuleDef;
 import org.broadinstitute.ddp.model.activity.definition.validation.UniqueRuleDef;
-import org.broadinstitute.ddp.model.activity.instance.validation.AgeRangeRule;
-import org.broadinstitute.ddp.model.activity.instance.validation.CompleteRule;
-import org.broadinstitute.ddp.model.activity.instance.validation.DateFieldRequiredRule;
-import org.broadinstitute.ddp.model.activity.instance.validation.DateRangeRule;
-import org.broadinstitute.ddp.model.activity.instance.validation.IntRangeRule;
-import org.broadinstitute.ddp.model.activity.instance.validation.LengthRule;
-import org.broadinstitute.ddp.model.activity.instance.validation.NumOptionsSelectedRule;
-import org.broadinstitute.ddp.model.activity.instance.validation.RegexRule;
-import org.broadinstitute.ddp.model.activity.instance.validation.RequiredRule;
-import org.broadinstitute.ddp.model.activity.instance.validation.Rule;
-import org.broadinstitute.ddp.model.activity.instance.validation.UniqueRule;
+import org.broadinstitute.ddp.model.activity.instance.validation.*;
 import org.broadinstitute.ddp.model.activity.revision.RevisionMetadata;
 import org.broadinstitute.ddp.model.activity.types.RuleType;
 import org.jdbi.v3.sqlobject.CreateSqlObject;
@@ -209,6 +193,11 @@ public interface ValidationDao extends SqlObject {
                 var intRangeDto = (IntRangeRuleDto) dto;
                 return IntRangeRule.of(dto.getId(), message, hint, dto.isAllowSave(),
                         intRangeDto.getMin(), intRangeDto.getMax());
+            case DECIMAL_RANGE:
+                var decimalRangeDto = (DecimalRangeRuleDto) dto;
+                return DecimalRangeRule.of(dto.getId(), message, hint, dto.isAllowSave(),
+                        decimalRangeDto.getMin(), decimalRangeDto.getMax());
+
             default:
                 throw new DaoException("Unknown validation rule type " + dto.getRuleType());
         }
