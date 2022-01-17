@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet author="deliseev" id="20220117-add-decimal_value_column">
+        <addColumn tableName="numeric_answer">
+            <column name="decimal_value" position="2" type="decimal(50,10)"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet author="deliseev" id="20220117-add-decimal-range-validation-table">
+        <createTable tableName="decimal_range_validation">
+            <column name="validation_id" type="bigint">
+                <constraints primaryKey="true" primaryKeyName="decimal_range_validation_pk"
+                             references="validation(validation_id)" foreignKeyName="decimal_range_validation_fk"/>
+            </column>
+            <column name="min" type="decimal(50,10)"/>
+            <column name="max" type="decimal(50,10)"/>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
