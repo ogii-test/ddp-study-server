@@ -1,8 +1,13 @@
 package org.broadinstitute.ddp.model.activity.instance.validation;
 
-import org.broadinstitute.ddp.model.activity.instance.answer.NumericDecimalAnswer;
-import org.broadinstitute.ddp.model.activity.instance.answer.NumericIntegerAnswer;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.util.List;
+
 import org.broadinstitute.ddp.model.activity.instance.question.NumericQuestion;
+import org.broadinstitute.ddp.model.activity.instance.answer.NumericDecimalAnswer;
 import org.broadinstitute.ddp.model.activity.types.NumericType;
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -10,9 +15,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import java.math.BigDecimal;
-import java.util.List;
 
-import static org.junit.Assert.*;
 
 public class DecimalRangeRuleTest {
 
@@ -60,7 +63,7 @@ public class DecimalRangeRuleTest {
     public void testValidate_exactly() {
         DecimalRangeRule rule = DecimalRangeRule.of("msg", "hint", false, BigDecimal.valueOf(3L), BigDecimal.valueOf(3L));
         assertEquals(false, run(rule, BigDecimal.ONE));
-        assertEquals(false, run(rule,BigDecimal.valueOf(12L)));
+        assertEquals(false, run(rule, BigDecimal.valueOf(12L)));
         assertEquals(true, run(rule, BigDecimal.valueOf(3L)));
     }
 
