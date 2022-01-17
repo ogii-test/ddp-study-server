@@ -165,10 +165,12 @@ public class AnswerToAnswerCopier {
             NumericAnswer numericAnswer = (NumericAnswer) sourceAnswer;
             switch (numericAnswer.getNumericType()) {
                 case INTEGER:
-                    targetAnswer = new NumericIntegerAnswer(null, targetQuestion.getStableId(), null, (Long) sourceAnswer.getValue());
+                    targetAnswer = new NumericIntegerAnswer(null, targetQuestion.getStableId(), null,
+                            (Long) sourceAnswer.getValue());
                     break;
                 case DECIMAL:
-                    targetAnswer = new NumericDecimalAnswer(null, targetQuestion.getStableId(), null, (BigDecimal) numericAnswer.getValue());
+                    targetAnswer = new NumericDecimalAnswer(null, targetQuestion.getStableId(), null,
+                            (BigDecimal) numericAnswer.getValue());
                     break;
                 default:
                     throw new DDPException("Unknown numeric type: " + numericAnswer.getNumericType());
