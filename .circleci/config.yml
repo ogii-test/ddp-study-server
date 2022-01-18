@@ -16,7 +16,7 @@ workflows:
     jobs:
       - path-filtering/filter:
           name: check-files
-          base-revision: << pipeline.git.branch >>
+          base-revision: TryToGetCircleCiMonoRepoToWork
           config-path: .circleci/main-config.yml
           mapping: |
             pepper-apis/docs/.* project api-docs
