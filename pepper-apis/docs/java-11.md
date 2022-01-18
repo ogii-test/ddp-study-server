@@ -12,7 +12,7 @@ On macOS, the preferred way is to use [Homebrew][brew]. You may also want a "ver
 manager" to easily switch between Java versions, like the [jenv] tool.
 
 To install:
-
+ 
 ```
 $ brew tap homebrew/cask-versions
 $ brew cask install java11
