@@ -20,7 +20,7 @@ The `inlineRc` flag provides the necessary connection parameters. The `url` valu
 should match what's specified in the `testing-inmemorydb.conf` file. The default
 user is `sa` with an empty password.
 
-And that's it!
+And that's it! 
 
 [st]: http://hsqldb.org/doc/util-guide/sqltool-chapt.html
 [sf]: https://sourceforge.net/projects/hsqldb/files/
